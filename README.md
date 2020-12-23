@@ -1,2 +1,6 @@
-# LuDesign
-一个个人组件库，模拟ant-design
+<!-- https://git.imooc.com/coding-428/vikingship.git -->
+
+# Lu-Design
+
+个人的组件库项目，使用技术栈主要有react、typescript、sass
+
