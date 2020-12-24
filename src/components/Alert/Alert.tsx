@@ -47,12 +47,8 @@ const Alert: React.FC<NativeProps> = (props) => {
                 <div
                     {...resetProps}
                     className={classes}>
-                    <h3>
-                        {title}
-                    </h3>
-                    <p>
-                        {children}
-                    </p>
+                    <h3>{title}</h3>
+                    <p>{children}</p>
                     {
                         close.Show === showClose
                         && <div
