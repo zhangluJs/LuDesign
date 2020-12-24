@@ -60,7 +60,6 @@ const Alert: React.FC<NativeProps> = (props) => {
                 </div>
             }
         </>
-        
     )
 }
 
