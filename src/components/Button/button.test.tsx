@@ -43,7 +43,7 @@ const defaultProps = {
 
 describe('Button Test', () => {
     it('Button Default Test', () => {
-        // 将组件挂载
+        // 将组件挂载到测试用例上去 
         const wrapper = render(<Button {...defaultProps}>Nice</Button>);
 
         // 挂载后获取组件元素
@@ -75,15 +75,17 @@ describe('Button Test', () => {
     })
 
     it('Button is Link', () => {
-        const wrapper = render(<Button {...testLinkProps}>Link</Button>);
+        const wrapper = render(<Button {...defaultProps} {...testLinkProps}>Link</Button>);
         const element = wrapper.getByText('Link');
         expect(element).toBeInTheDocument();
         expect(element).toHaveClass('btn test btn-link btn-sm');
         expect(element.tagName).toEqual('A');
+        fireEvent.click(element);
+        expect(defaultProps.onClick).toHaveBeenCalled();
     })
 
     it('Button is disabled', () => {
-        const wrapper = render(<Button {...disabled}>Nice</Button>);
+        const wrapper = render(<Button {...defaultProps} {...disabled}>Nice</Button>);
         // 类型断言变成button as HTMLButtonElement
         const element = wrapper.getByText('Nice') as HTMLButtonElement;
         expect(element.disabled).toBeTruthy();

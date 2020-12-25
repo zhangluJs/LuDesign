@@ -23,9 +23,9 @@ interface AlertBaseProps {
 
 type NativeDivProps = AlertBaseProps & React.BaseHTMLAttributes<HTMLElement>;
 
-export type NativeProps = AlertBaseProps & NativeDivProps;
+export type AlertProps = AlertBaseProps & NativeDivProps;
 
-const Alert: React.FC<NativeProps> = (props) => {
+const Alert: React.FC<AlertProps> = (props) => {
     const [closeAlert, setCloseAlert] = useState(true);
     const {
         showClose,
@@ -65,7 +65,7 @@ const Alert: React.FC<NativeProps> = (props) => {
 
 Alert.defaultProps = {
     type: AlertType.Default,
-    title: '默认标题这是',
+    title: '消息提示文案',
     showClose: close.Show
 }
 
