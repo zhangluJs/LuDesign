@@ -1,6 +1,8 @@
 import React from 'react';
 import Button, {ButtonSize, ButtonType} from './components/Button/button';
 import Alert, {AlertType, close} from './components/Alert/Alert';
+import Menu from './components/Menu/menu';
+import MenuItem from './components/Menu/menuItem';
 
 function App() {
   return (
@@ -65,6 +67,20 @@ function App() {
                 title="这是一个alert组件标题">
                 this is a warning
             </Alert>
+            <Menu defaultIndex={0}>
+                <MenuItem index={0}>Link 0</MenuItem>
+                <MenuItem index={1} disabled>Link 1</MenuItem>
+                <MenuItem index={2}>Link 2</MenuItem>
+                <MenuItem index={3}>Link 3</MenuItem>
+                <MenuItem index={4}>Link 4</MenuItem>
+            </Menu>
+            <Menu defaultIndex={0} mode="vertical">
+                <MenuItem index={0}>Link 0</MenuItem>
+                <MenuItem index={1} disabled>Link 1</MenuItem>
+                <MenuItem index={2}>Link 2</MenuItem>
+                <MenuItem index={3}>Link 3</MenuItem>
+                <MenuItem index={4}>Link 4</MenuItem>
+            </Menu>
         </div>
         <a
           className="App-link"

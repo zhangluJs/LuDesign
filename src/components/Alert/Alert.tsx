@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import classname from 'classnames';
+import classNames from 'classnames';
 
 export enum AlertType {
     Success = 'success',
@@ -36,7 +36,7 @@ const Alert: React.FC<AlertProps> = (props) => {
         ...resetProps
     } = props;
     // alert alert-type 
-    const classes = classname('alert', className, {
+    const classes = classNames('alert', className, {
         [`alert-${type}`]: type
     });
 
