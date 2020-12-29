@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {MenuContext} from './menu';
 
 export interface MenuItemProps {
-    index: number;
+    index?: number;
     disabled?: boolean;
     className?: string;
     style?: React.CSSProperties;
@@ -26,7 +26,7 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
     })
 
     function handleClick() {
-        if (context.onSelect && !disabled) {
+        if (context.onSelect && !disabled && (typeof index === 'number')) {
             context.onSelect(index);
         }
     }
@@ -40,5 +40,12 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
         </li>
     )
 }
+
+// 
+/**
+ * react 自带的静态属性
+ * 声明这个name供父组件判断传入的children是否正确
+ */
+MenuItem.displayName = 'MenuItem';
 
 export default MenuItem;

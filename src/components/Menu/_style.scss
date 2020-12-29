@@ -10,6 +10,8 @@
         padding: $menu-item-padding-y $menu-item-padding-x;
         cursor: pointer;
         transition: $menu-transition;
+        list-style: none;
+        color: $gray-900;
         &:hover,
         &:focus {
             text-decoration: none;
@@ -24,6 +26,23 @@
             color: $menu-item-active-color;
             border-bottom: $menu-item-active-border-width solid $menu-item-active-color;
         }
+        &.is-actived {
+            .lu-submenu {
+                display: inline-block;
+            }
+        }
+    }
+    
+    .lu-submenu {
+        list-style: none;
+        width: 100%;
+        display: none;
+        .menu-item {
+            &.is-actived,
+            &:hover {
+                border-bottom: 0;
+            }
+        }
     }
 }
 
@@ -37,6 +56,26 @@
         &:hover {
             border-bottom: 0;
             border-left: $menu-item-active-border-width solid $menu-item-active-color;
+        }
+    }
+}
+
+.menu-horizontal {
+    .submenu-item {
+        position: relative;
+    }
+    .lu-submenu {
+        position: absolute;
+        left: 0;
+        top: calc(100% + 8px);
+        background: $white;
+        border: $border-width solid $border-color;
+        box-shadow: $submenu-box-shadow;
+        list-style: none;
+        padding: 0;
+        width: 100%;
+        .menu-item {
+            text-align: center;
         }
     }
 }

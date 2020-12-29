@@ -3,6 +3,7 @@ import Button, {ButtonSize, ButtonType} from './components/Button/button';
 import Alert, {AlertType, close} from './components/Alert/Alert';
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
+import SubMenu from './components/Menu/subMenu';
 
 function App() {
   return (
@@ -67,17 +68,28 @@ function App() {
                 title="这是一个alert组件标题">
                 this is a warning
             </Alert>
-            <Menu defaultIndex={0}>
+            <Menu>
+                <MenuItem>1</MenuItem>
+                <SubMenu title={'11111'}>
+                    <MenuItem>1</MenuItem>
+                    <MenuItem>2</MenuItem>
+                </SubMenu>
+                <MenuItem>2</MenuItem>
+            </Menu>
+            {/* <Menu defaultIndex={0}>
                 <MenuItem index={0}>Link 0</MenuItem>
                 <MenuItem index={1} disabled>Link 1</MenuItem>
                 <MenuItem index={2}>Link 2</MenuItem>
                 <MenuItem index={3}>Link 3</MenuItem>
                 <MenuItem index={4}>Link 4</MenuItem>
-            </Menu>
+            </Menu> */}
             <Menu defaultIndex={0} mode="vertical">
                 <MenuItem index={0}>Link 0</MenuItem>
                 <MenuItem index={1} disabled>Link 1</MenuItem>
-                <MenuItem index={2}>Link 2</MenuItem>
+                <SubMenu title={'11111'}>
+                    <MenuItem>1</MenuItem>
+                    <MenuItem>2</MenuItem>
+                </SubMenu>
                 <MenuItem index={3}>Link 3</MenuItem>
                 <MenuItem index={4}>Link 4</MenuItem>
             </Menu>
