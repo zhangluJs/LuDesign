@@ -1,4 +1,4 @@
-import React, {Children, useContext} from 'react';
+import React, {Children, useContext, useState} from 'react';
 import classNames from 'classnames';
 import {MenuContext} from './menu';
 import {MenuItemProps} from './menuItem';
@@ -11,12 +11,38 @@ export interface SubMenuProps {
 
 const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) => {
     const context = useContext(MenuContext);
+    const [menuOpen, setMenuOpen] = useState(false);
     const classes = classNames('menu-item submenu-item', className, {
         'is-actived': context.index === index
     });
 
+    function isOpenSubMenu(e: React.MouseEvent) {
+        e.preventDefault();
+        setMenuOpen(!menuOpen);
+    }
+
+    let timer: any;
+    function handleMouse(e: React.MouseEvent, toggle: boolean) {
+        clearTimeout(timer);
+        e.preventDefault();
+        timer = setTimeout(() => {
+            setMenuOpen(toggle);
+        }, 300)
+    }
+
+    const clickEvent = context.mode === 'vertical' ? {
+        onClick: isOpenSubMenu
+    } : {}
+    const hoverEvent = context.mode !== 'vertical' ? {
+        onMouseEnter: (e: React.MouseEvent) => {handleMouse(e, true)},
+        onMouseLeave: (e: React.MouseEvent) => {handleMouse(e, false)}
+    } : {}
+
     const renderChildren = () => {
-        const childrenComponent = React.Children.map(children, (child, index) => {
+        const subMenuClass = classNames('lu-submenu', {
+            'menu-opened': menuOpen
+        });
+        const childrenComponent = Children.map(children, (child, index) => {
             const childElement = child as React.FunctionComponentElement<MenuItemProps>;
             const {displayName} = childElement.type;
             if (displayName === 'MenuItem') {
@@ -26,7 +52,7 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
             }
         })
         return (
-            <ul className="lu-submenu">
+            <ul className={subMenuClass}>
                 {childrenComponent}
             </ul>
         )
@@ -39,11 +65,8 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
     }
 
     return (
-        <li
-            onClick={handleClick}
-            key={index}
-            className={classes}>
-            <div>{title}</div>
+        <li {...hoverEvent} key={index} className={classes}>
+            <div {...clickEvent}>{title}</div>
             {renderChildren()}
         </li>
     )

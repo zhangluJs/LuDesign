@@ -26,11 +26,11 @@
             color: $menu-item-active-color;
             border-bottom: $menu-item-active-border-width solid $menu-item-active-color;
         }
-        &.is-actived {
-            .lu-submenu {
-                display: inline-block;
-            }
-        }
+        // &.is-actived {
+        //     .lu-submenu {
+        //         display: inline-block;
+        //     }
+        // }
     }
     
     .lu-submenu {
@@ -43,6 +43,9 @@
                 border-bottom: 0;
             }
         }
+    }
+    .lu-submenu.menu-opened {
+        display: block;
     }
 }
 
