@@ -30,7 +30,7 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
             context.onSelect(index);
         }
     }
-    
+
     return (
         <li
             onClick={handleClick}
@@ -41,7 +41,6 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
     )
 }
 
-// 
 /**
  * react 自带的静态属性
  * 声明这个name供父组件判断传入的children是否正确
