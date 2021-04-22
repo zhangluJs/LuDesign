@@ -2,25 +2,32 @@ import React, {createContext, useState} from 'react';
 import {MenuItemProps} from './menuItem';
 import classNames from 'classnames';
 
+/**
+ * ts 字符串字面量
+ * 联合类型
+ * 代表取值只能是其中的某些类型
+ */
 type MenuMode = 'horizontal' | 'vertical';
-type SelectCallback = (selectedIndex: number) => void;
+type SelectCallback = (selectedIndex: string) => void;
 
 export interface MenuProps {
-    defaultIndex?: number;
+    defaultIndex?: string;
     mode?: MenuMode;
     className?: string;
     style?: React.CSSProperties;
-    onSelect?: SelectCallback
+    onSelect?: SelectCallback;
+    defaultSubMenus?: string[]
 }
 
 interface IMenuContext {
-    index: number;
-    onSelect?: SelectCallback,
-    mode?: MenuMode
+    index: string;
+    onSelect?: SelectCallback;
+    mode?: MenuMode;
+    defaultSubMenus?: string[]
 }
 
 export const MenuContext = createContext<IMenuContext>({
-    index: 0
+    index: '0'
 });
 
 const Menu: React.FC<MenuProps> = (props) => {
@@ -29,8 +36,10 @@ const Menu: React.FC<MenuProps> = (props) => {
         className,
         style,
         mode,
+        // children 是React组件默认的属性
         children,
-        onSelect
+        onSelect,
+        defaultSubMenus
     } = props;
 
     const [currentActive, setCurrentActive] = useState(defaultIndex);
@@ -40,7 +49,7 @@ const Menu: React.FC<MenuProps> = (props) => {
         'menu-horizontal': mode !== 'vertical'
     })
 
-    const handleClick = (index: number) => {
+    const handleClick = (index: string) => {
         setCurrentActive(index);
         if (onSelect) {
             onSelect(index);
@@ -48,9 +57,10 @@ const Menu: React.FC<MenuProps> = (props) => {
     }
 
     const passedContext: IMenuContext = {
-        index: currentActive ? currentActive : 0,
+        index: currentActive ? currentActive : '0',
         onSelect: handleClick,
-        mode: mode
+        mode,
+        defaultSubMenus
     }
 
     /**
@@ -67,7 +77,7 @@ const Menu: React.FC<MenuProps> = (props) => {
                  * React.cloneElement 克隆元素，将新旧属性合并返回一个新的元素
                  * 这里是将MenuItem的index添加
                  */
-                return React.cloneElement(childElement, {index});
+                return React.cloneElement(childElement, {index: index.toString()});
                 // return child;
             } else {
                 console.error('Warning: Menu has a child which is not a MenuItem Component');
@@ -90,7 +100,8 @@ const Menu: React.FC<MenuProps> = (props) => {
 
 Menu.defaultProps = {
     mode: 'horizontal',
-    defaultIndex: 0
+    defaultIndex: '0',
+    defaultSubMenus: []
 }
 
 export default Menu;

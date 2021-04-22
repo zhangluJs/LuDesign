@@ -83,15 +83,15 @@ function App() {
                 <MenuItem index={3}>Link 3</MenuItem>
                 <MenuItem index={4}>Link 4</MenuItem>
             </Menu> */}
-            <Menu defaultIndex={0} mode="vertical">
-                <MenuItem index={0}>Link 0</MenuItem>
-                <MenuItem index={1} disabled>Link 1</MenuItem>
-                <SubMenu title={'11111'}>
-                    <MenuItem>1</MenuItem>
-                    <MenuItem>2</MenuItem>
+            <Menu defaultIndex="0" mode="vertical" defaultSubMenus={['1']}>
+                <MenuItem index="0">Link 0</MenuItem>
+                <MenuItem index="1" disabled>Link 1</MenuItem>
+                <SubMenu index="2" title={'text'}>
+                    <MenuItem index="2-0">1</MenuItem>
+                    <MenuItem index="2-1">2</MenuItem>
                 </SubMenu>
-                <MenuItem index={3}>Link 3</MenuItem>
-                <MenuItem index={4}>Link 4</MenuItem>
+                <MenuItem index="3">Link 3</MenuItem>
+                <MenuItem index="4">Link 4</MenuItem>
             </Menu>
         </div>
         <a
