@@ -1,16 +1,17 @@
 import React from 'react';
-import {render, RenderResult, fireEvent, cleanup} from '@testing-library/react';
+import {render, RenderResult, fireEvent, cleanup, waitFor} from '@testing-library/react';
 import Menu, {MenuProps} from './menu';
 import MenuItem, {MenuItemProps} from './menuItem';
+import SubMenu from './subMenu';
 
 const testProps: MenuProps = {
-    defaultIndex: 0,
+    defaultIndex: '0',
     onSelect: jest.fn(),
     className: 'test'
 }
 
 const testVerProps: MenuProps = {
-    defaultIndex: 0,
+    defaultIndex: '0',
     mode: 'vertical'
 }
 
@@ -21,11 +22,29 @@ const testVerProps: MenuProps = {
 const generateMenu = (props: MenuProps) => {
     return (
         <Menu {...props}>
-            <MenuItem index={0}>active</MenuItem>
-            <MenuItem index={1} disabled>disabled</MenuItem>
-            <MenuItem index={2}>xyz</MenuItem>
+            <MenuItem index="0">active</MenuItem>
+            <MenuItem index="1" disabled>disabled</MenuItem>
+            <MenuItem index="2">xyz</MenuItem>
+            <SubMenu title="dropdown" index="3">
+                <MenuItem index="3-1">drop1</MenuItem>
+            </SubMenu>
         </Menu>
     );
+}
+
+const createStyleFile = () => {
+    const cssFile: string = `
+        .lu-submenu {
+            display: none;
+        }
+        .lu-submenu.menu-open {
+            display: blobk;
+        }
+    `;
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = cssFile;
+    return style;
 }
 
 let wrapper: RenderResult, menuElement: HTMLElement, activeElement: HTMLElement, disabledElement: HTMLElement;
@@ -35,6 +54,8 @@ describe('test Menu and MenuItem components', () => {
     beforeEach(() => {
         // 渲染组件
         wrapper = render(generateMenu(testProps));
+        
+        wrapper.container.append(createStyleFile());
 
         // 这里getByTestId需要去组件节点写上data-testid
         menuElement = wrapper.getByTestId('test-menu');
@@ -51,7 +72,13 @@ describe('test Menu and MenuItem components', () => {
         // 是否挂载到dom节点上
         expect(menuElement).toBeInTheDocument();
         expect(menuElement).toHaveClass('lu-menu test');
-        expect(menuElement.getElementsByTagName('li').length).toEqual(3);
+        // expect(menuElement.getElementsByTagName('li').length).toEqual(4);
+
+        /**
+         * :scope 是一个伪类，代表了当前节点的本身
+         * https://developer.mozilla.org/zh-CN/docs/Web/CSS/:scope 解释的很详细
+         */
+        expect(menuElement.querySelectorAll(':scope > li').length).toEqual(4);
         expect(activeElement).toHaveClass('is-actived menu-item');
         expect(disabledElement).toHaveClass('is-disabled menu-item');
     })
@@ -62,10 +89,10 @@ describe('test Menu and MenuItem components', () => {
         fireEvent.click(element);
         expect(element).toHaveClass('is-actived');
         expect(activeElement).not.toHaveClass('is-actived');
-        expect(testProps.onSelect).toHaveBeenCalledWith(2);
+        expect(testProps.onSelect).toHaveBeenCalledWith('2');
         // 点击disabled
         fireEvent.click(disabledElement);
-        expect(testProps.onSelect).not.toHaveBeenCalledWith(1);
+        expect(testProps.onSelect).not.toHaveBeenCalledWith('1');
         expect(disabledElement).not.toHaveClass('is-actived');
     })
 
@@ -75,5 +102,17 @@ describe('test Menu and MenuItem components', () => {
         const menuElement = wrapper.getByTestId('test-menu');
         expect(menuElement).toBeInTheDocument();
         expect(menuElement).toHaveClass('lu-menu menu-vertical');
+    })
+
+    it('should show dropdown items when hover on subMenu', async () => {
+        /**
+         * 为这里添加了一些css。因为没有css样式的话，这里的测试用例会认为当前节点其实是存在的。不过也缺失存在
+         */
+        expect(wrapper.queryByText('drop1')).not.toBeVisible();
+        const dropdownElement = wrapper.getByText('dropdown');
+        fireEvent.mouseEnter(dropdownElement);
+        await waitFor(() => {
+            expect(wrapper.queryByText('drop1')).toBeVisible();
+        });
     })
 })
