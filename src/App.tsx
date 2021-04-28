@@ -5,6 +5,9 @@ import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import SubMenu from './components/Menu/subMenu';
 
+import Tabs from './components/Tabs/Tabs';
+import TabItem from './components/Tabs/TabItem';
+
 function App() {
   return (
     <div className="App">
@@ -93,6 +96,12 @@ function App() {
                 <MenuItem index="3">Link 3</MenuItem>
                 <MenuItem index="4">Link 4</MenuItem>
             </Menu>
+            11111
+            <Tabs defaultIndex={0} onSelect={(index) => {alert(index)}}>
+              <TabItem label="card1">this is card one</TabItem>
+              <TabItem label="card2">this is card two</TabItem>
+              <TabItem label="disabled" disabled>this is card three</TabItem>
+            </Tabs>
         </div>
         <a
           className="App-link"
