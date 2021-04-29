@@ -1,6 +1,7 @@
 import React, {useState, createContext} from 'react';
 import classNames from 'classnames';
 import {TabItemProps} from './TabItem';
+import TabPane from './TabPane';
 
 type TabsMode = 'horizontal' | 'vertical';
 type SeclectCallback = (selectedIndex: number) => void;
@@ -58,7 +59,6 @@ const Tabs: React.FC<TabsProps> = (props) => {
             const childElement = child as React.FunctionComponentElement<TabItemProps>;
             const {displayName} = childElement.type;
             if (displayName === 'TabItem') {
-
                 return React.cloneElement(childElement, {index: index});
             } else {
                 console.error('Warning: Tabs has a child which is not a TabItem Component')
@@ -67,14 +67,24 @@ const Tabs: React.FC<TabsProps> = (props) => {
     }
     
     return (
-        <ul
-            data-test="test-tabs"
-            className={classes}
-            style={style}>
-            <TabContext.Provider value={passedContext}>
-                {renderChildren()}
-            </TabContext.Provider>
-        </ul>
+        <div data-test="test-tabs">
+            <ul
+                className={classes}
+                style={style}>
+                <TabContext.Provider value={passedContext}>
+                    {renderChildren()}
+                </TabContext.Provider>
+            </ul>
+            <div>
+                {currentActive}
+                {passedContext.index}
+                {currentActive === passedContext.index ? children : '123'}
+                {/* <TabContext.Provider value={passedContext}>
+                    {renderPaneChildren()}
+                </TabContext.Provider> */}
+                {/* <TabPane></TabPane> */}
+            </div>
+        </div>
     )
 }
 

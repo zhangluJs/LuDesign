@@ -24,7 +24,7 @@ const TabItem: React.FC<TabItemProps> = (props) => {
 
     const classes = classNames('tab-item', className, {
         'is-disabled': disabled,
-        'is-activeed': context.index === index
+        'is-actived': context.index === index
     });
 
     function handleClick() {
