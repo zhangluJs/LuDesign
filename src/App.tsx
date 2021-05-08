@@ -98,7 +98,9 @@ function App() {
             </Menu>
             ------ 分割线 ------
             <Tabs defaultIndex={0} onSelect={(index) => {console.log(index)}}>
-              <TabItem label="card1">this is card one</TabItem>
+              <TabItem label="card1">
+                  <div>123123</div>
+              </TabItem>
               <TabItem label="card2">this is card two</TabItem>
               <TabItem label="disabled" disabled>this is card three</TabItem>
             </Tabs>

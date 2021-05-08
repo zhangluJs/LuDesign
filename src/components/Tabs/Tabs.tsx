@@ -1,67 +1,67 @@
 import React, {useState, createContext} from 'react';
 import classNames from 'classnames';
 import {TabItemProps} from './TabItem';
-import TabPane from './TabPane';
 
 type TabsMode = 'horizontal' | 'vertical';
 type SeclectCallback = (selectedIndex: number) => void;
 
 export interface TabsProps {
     defaultIndex?: number;
-    mode?: TabsMode;
+    type?: 'line' | 'card';
     className?: string;
     style?: React.CSSProperties;
     onSelect?: SeclectCallback
 };
 
-interface ITabContext {
-    index: number,
-    onSelect?: SeclectCallback,
-    mode?: TabsMode
-}
-
-export const TabContext = createContext<ITabContext>({
-    index: 0
-})
-
 const Tabs: React.FC<TabsProps> = (props) => {
     const {
         defaultIndex,
-        mode,
+        type,
         className,
         style,
         children,
         onSelect
     } = props;
 
-    const [currentActive, setCurrentActive] = useState(defaultIndex);
+    const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
     const classes = classNames('lu-tabs', className, {
-        'tabs-vertical': mode === 'vertical',
-        'tabs-horizontal': mode !== 'vertical'
+        'tabs-line': type === 'line',
+        'tabs-card': type === 'card'
     });
 
-    const handleClick = (index: number) => {
-        setCurrentActive(index);
-        if (onSelect) {
-            onSelect(index);
+    const handleClick = (e: React.MouseEvent,index: number, disabled: boolean | undefined) => {
+        if (!disabled) {
+            setActiveIndex(index);
+            if (onSelect) {
+                onSelect(index);
+            }
         }
-    }
-
-    const passedContext: ITabContext = {
-        index: currentActive ? currentActive : 0,
-        onSelect: handleClick,
-        mode
     }
 
     const renderChildren = () => {
         return React.Children.map(children, (child, index) => {
             const childElement = child as React.FunctionComponentElement<TabItemProps>;
-            const {displayName} = childElement.type;
-            if (displayName === 'TabItem') {
-                return React.cloneElement(childElement, {index: index});
-            } else {
-                console.error('Warning: Tabs has a child which is not a TabItem Component')
+            const {label, disabled} = childElement.props;
+            const classes = classNames('tab-item', {
+                'is-actived': activeIndex === index,
+                'is-disabled': disabled,
+            });
+            return (
+                <li 
+                    className={classes} 
+                    key={`nav-item-${index}`}
+                    onClick={(e) => {handleClick(e, index, disabled)}}>
+                    {label}
+                </li>
+            )
+        })
+    }
+
+    const renderContent = () => {
+        return React.Children.map(children, (child, index) => {
+            if (index === activeIndex) {
+                return child;
             }
         })
     }
@@ -71,25 +71,17 @@ const Tabs: React.FC<TabsProps> = (props) => {
             <ul
                 className={classes}
                 style={style}>
-                <TabContext.Provider value={passedContext}>
-                    {renderChildren()}
-                </TabContext.Provider>
+                {renderChildren()}
             </ul>
             <div>
-                {currentActive}
-                {passedContext.index}
-                {currentActive === passedContext.index ? children : '123'}
-                {/* <TabContext.Provider value={passedContext}>
-                    {renderPaneChildren()}
-                </TabContext.Provider> */}
-                {/* <TabPane></TabPane> */}
+                {renderContent()}
             </div>
         </div>
     )
 }
 
 Tabs.defaultProps = {
-    mode: 'horizontal',
+    type: 'line',
     defaultIndex: 0
 }
 

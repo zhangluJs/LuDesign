@@ -27,13 +27,13 @@
     }
 }
 
-.tabs-horizontal {
+.tabs-line {
     >.tab-item {
         border-bottom: $menu-item-active-border-width solid transparent;
     }
 }
 
-.tabs-vertical {
+.tabs-card {
     flex-direction: column;
     border-bottom: 0px;
     margin: 10px 20px;
