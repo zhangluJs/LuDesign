@@ -67,7 +67,7 @@ const Tabs: React.FC<TabsProps> = (props) => {
     }
     
     return (
-        <div data-test="test-tabs">
+        <div data-testid="test-tabs">
             <ul
                 className={classes}
                 style={style}>

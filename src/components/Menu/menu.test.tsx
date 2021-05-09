@@ -1,4 +1,11 @@
 import React from 'react';
+/**
+ * render 挂载节点
+ * RenderResult 节点渲染
+ * fireEvent 事件触发
+ * cleanup 清除节点
+ * waitFor 异步操作
+ */
 import {render, RenderResult, fireEvent, cleanup, waitFor} from '@testing-library/react';
 import Menu, {MenuProps} from './menu';
 import MenuItem, {MenuItemProps} from './menuItem';
@@ -72,7 +79,7 @@ describe('test Menu and MenuItem components', () => {
         // wrapper.container
     });
 
-    it('should render cottect Menu and MenuItem based on default props', () => {
+    it('should render correct Menu and MenuItem based on default props', () => {
         // 是否挂载到dom节点上
         expect(menuElement).toBeInTheDocument();
         expect(menuElement).toHaveClass('lu-menu test');
