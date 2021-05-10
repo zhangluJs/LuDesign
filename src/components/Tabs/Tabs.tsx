@@ -30,6 +30,11 @@ const Tabs: React.FC<TabsProps> = (props) => {
         'tabs-card': type === 'card'
     });
 
+    const navClass = classNames('lu-tabs-nav', {
+        'nav-line': type === 'line',
+        'nav-card': type === 'card',
+      })
+
     const handleClick = (e: React.MouseEvent,index: number, disabled: boolean | undefined) => {
         if (!disabled) {
             setActiveIndex(index);
@@ -43,10 +48,10 @@ const Tabs: React.FC<TabsProps> = (props) => {
         return React.Children.map(children, (child, index) => {
             const childElement = child as React.FunctionComponentElement<TabItemProps>;
             const {label, disabled} = childElement.props;
-            const classes = classNames('tab-item', {
-                'is-actived': activeIndex === index,
-                'is-disabled': disabled,
-            });
+            const classes = classNames('lu-tabs-nav-item', {
+                'is-active': activeIndex === index,
+                'disabled': disabled,
+            })
             return (
                 <li 
                     className={classes} 
@@ -67,13 +72,13 @@ const Tabs: React.FC<TabsProps> = (props) => {
     }
     
     return (
-        <div data-testid="test-tabs">
+        <div data-testid="test-tabs" className={`lu-tabs ${className}`}>
             <ul
-                className={classes}
+                className={navClass}
                 style={style}>
                 {renderChildren()}
             </ul>
-            <div>
+            <div className="lu-tabs-content">
                 {renderContent()}
             </div>
         </div>

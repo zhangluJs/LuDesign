@@ -104,6 +104,14 @@ function App() {
               <TabItem label={<a>123</a>}>this is card two</TabItem>
               <TabItem label="disabled" disabled>this is card three</TabItem>
             </Tabs>
+            ------ 分割线 ------
+            <Tabs type="card" defaultIndex={0} onSelect={(index) => {console.log(index)}}>
+              <TabItem label="card1">
+                  <div>123123</div>
+              </TabItem>
+              <TabItem label={<a>123</a>}>this is card two</TabItem>
+              <TabItem label="disabled" disabled>this is card three</TabItem>
+            </Tabs>
         </div>
         <a
           className="App-link"

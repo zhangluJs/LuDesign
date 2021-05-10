@@ -9,7 +9,9 @@ export interface TabItemProps {
 const TabItem: React.FC<TabItemProps> = ({children}) => {
 
     return (
-        <div>{children}</div>
+        <div className="lu-tab-panel">
+            {children}
+        </div>
     )
 }
 
