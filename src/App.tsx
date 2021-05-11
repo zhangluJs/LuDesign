@@ -1,17 +1,25 @@
 import React from 'react';
+
+// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {library} from '@fortawesome/fontawesome-svg-core';
+// fas 添加所有图表
+import {fas} from '@fortawesome/free-solid-svg-icons';
+
 import Button, {ButtonSize, ButtonType} from './components/Button/button';
 import Alert, {AlertType, close} from './components/Alert/Alert';
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import SubMenu from './components/Menu/subMenu';
-
 import Tabs from './components/Tabs/Tabs';
 import TabItem from './components/Tabs/TabItem';
+import Icon from './components/Icon/icon';
 
+library.add(fas);
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        {/* <FontAwesomeIcon icon={faCoffee} size="2x"></FontAwesomeIcon> */}
         <Button autoFocus>Hello world</Button>
         <Button
             size={ButtonSize.Small}
@@ -112,6 +120,9 @@ function App() {
               <TabItem label={<a>123</a>}>this is card two</TabItem>
               <TabItem label="disabled" disabled>this is card three</TabItem>
             </Tabs>
+            ------ 分割线 ------
+            <Icon icon={'arrow-down'} size="10x" theme="danger" ></Icon>
+            <Icon icon={'apple-alt'} size="1x" theme="primary" ></Icon>
         </div>
         <a
           className="App-link"
