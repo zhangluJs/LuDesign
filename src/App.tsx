@@ -22,30 +22,30 @@ function App() {
         {/* <FontAwesomeIcon icon={faCoffee} size="2x"></FontAwesomeIcon> */}
         <Button autoFocus>Hello world</Button>
         <Button
-            size={ButtonSize.Small}
-            btnType={ButtonType.Danger}
+            size='sm'
+            btnType='danger'
             disabled>
             Disabled Button
         </Button>
         <Button
-            size={ButtonSize.Large}
-            btnType={ButtonType.Primary}>
+            size='lg'
+            btnType='primary'>
             Large Primary
         </Button>
         <Button
             onClick={() => {alert(123123)}}
-            size={ButtonSize.Small}
-            btnType={ButtonType.Danger}>
+            size='sm'
+            btnType='danger'>
             Small Danger
         </Button>
         <Button
-            btnType={ButtonType.Link}
+            btnType='link'
             target="_blank"
             href="https://www.baidu.com">
             Baidu Link
         </Button>
         <Button
-            btnType={ButtonType.Link}
+            btnType='link'
             disabled
             href="https://www.baidu.com">
             Disabled Link

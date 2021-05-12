@@ -1,6 +1,6 @@
 import React, {Children, useContext, useState} from 'react';
 import classNames from 'classnames';
-import {CSSTransition} from 'react-transition-group';
+import Transition from '../Transition/Transition';
 
 import {MenuContext} from './menu';
 import {MenuItemProps} from './menuItem';
@@ -47,9 +47,11 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
     } : {}
 
     const renderChildren = () => {
+
         const subMenuClass = classNames('lu-submenu', {
             'menu-opened': menuOpen
         });
+
         const childrenComponent = Children.map(children, (child, i) => {
             const childElement = child as React.FunctionComponentElement<MenuItemProps>;
             const {displayName} = childElement.type;
@@ -59,17 +61,17 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
             } else {
                 console.error('Warning: SubMenu has a child which is not a MenuItem Component');
             }
-        })
+        });
+
         return (
-            <CSSTransition
+            <Transition
                 in={menuOpen}
                 timeout={300}
-                classNames="zoom-in-top"
-                appear>
+                classNames="zoom-in-top">
                 <ul className={subMenuClass}>
-                    {childrenComponent}
+                     {childrenComponent}
                 </ul>
-            </CSSTransition>
+            </Transition>
         )
     }
 
