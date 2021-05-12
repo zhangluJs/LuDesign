@@ -121,7 +121,8 @@ function App() {
               <TabItem label="disabled" disabled>this is card three</TabItem>
             </Tabs>
             ------ 分割线 ------
-            <Icon icon={'arrow-down'} size="10x" theme="danger" ></Icon>
+            <br></br>
+            <Icon icon={'arrow-down'} size="1x" theme="danger" ></Icon>
             <Icon icon={'apple-alt'} size="1x" theme="primary" ></Icon>
         </div>
         <a
