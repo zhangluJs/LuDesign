@@ -16,21 +16,21 @@ import Button, {ButtonType, ButtonSize, ButtonProps} from './button';
 // })
 
 const testProps: ButtonProps = {
-    btnType: ButtonType.Primary,
-    size: ButtonSize.Small,
+    btnType: 'primary',
+    size: 'sm',
     className:'test',
     disabled: true
 }
 
 const testLinkProps: ButtonProps = {
-    btnType: ButtonType.Link,
-    size: ButtonSize.Small,
-    className:'test',
+    btnType: 'link',
+    size: 'sm',
+    className: 'test',
     href: 'https://www.baidu.com'
 }
 
 const disabled: ButtonProps = {
-    btnType: ButtonType.Primary,
+    btnType: 'primary',
     disabled: true
 }
 

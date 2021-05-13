@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core';
 // fas 添加所有图表
 import {fas} from '@fortawesome/free-solid-svg-icons';
 
-import Button, {ButtonSize, ButtonType} from './components/Button/button';
+import Button from './components/Button/button';
 import Alert, {AlertType, close} from './components/Alert/Alert';
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
@@ -13,9 +13,11 @@ import SubMenu from './components/Menu/subMenu';
 import Tabs from './components/Tabs/Tabs';
 import TabItem from './components/Tabs/TabItem';
 import Icon from './components/Icon/icon';
+import Transition from './components/Transition/Transition';
 
 library.add(fas);
 function App() {
+  const [show, setShow] = useState(false);
   return (
     <div className="App">
       <header className="App-header">
@@ -124,15 +126,42 @@ function App() {
             <br></br>
             <Icon icon={'arrow-down'} size="1x" theme="danger" ></Icon>
             <Icon icon={'apple-alt'} size="1x" theme="primary" ></Icon>
+            <br></br>
+            ------ 分割线 ------
+            <br></br>
+            <Button
+              size="lg"
+              btnType="primary"
+              onClick={() => {setShow(!show)}}>
+                Toggle
+            </Button>
+            <Transition
+                in={show}
+                timeout={300}
+                classNames="zoom-in-left">
+                <div>123123123</div>
+            </Transition>
+            <Transition
+                wrapper
+                in={show}
+                timeout={300}
+                classNames="zoom-in-top">
+                <Button
+                    size="lg"
+                    btnType="primary"
+                    onClick={() => {setShow(!show)}}>
+                    Toggle
+            </Button>
+            </Transition>
         </div>
-        <a
+        {/* <a
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
         >
           Learn React
-        </a>
+        </a> */}
       </header>
     </div>
   );

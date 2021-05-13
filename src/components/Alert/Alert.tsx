@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
+import Icon from '../Icon/icon';
+import Transition from '../Transition/Transition';
 
 export enum AlertType {
     Success = 'success',
@@ -41,25 +43,27 @@ const Alert: React.FC<AlertProps> = (props) => {
     });
 
     return (
-        <>
-            {
-                closeAlert && 
-                <div
-                    {...resetProps}
-                    className={classes}>
-                    <h3>{title}</h3>
-                    <p>{children}</p>
-                    {
-                        close.Show === showClose
-                        && <div
-                            className="close"
-                            onClick={() => {setCloseAlert(false)}}>
-                            关闭
-                        </div>
-                    }
-                </div>
-            }
-        </>
+        <Transition
+            wrapper
+            in={closeAlert}
+            timeout={300}
+            classNames="zoom-in-left">
+            <div
+                {...resetProps}
+                className={classes}>
+                <h3>{title}</h3>
+                <p>{children}</p>
+                {
+                    close.Show === showClose
+                    && <Icon
+                        onClick={() => {setCloseAlert(false)}}
+                        className="close"
+                        icon={'times'}
+                        size="1x"
+                        theme="light" />
+                }
+            </div>
+        </Transition>
     )
 }
 
