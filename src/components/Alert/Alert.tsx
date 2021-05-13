@@ -16,17 +16,31 @@ export enum close {
 }
 
 interface AlertBaseProps {
+    /**标题 */
+    title: string;
+    /**描述 */
+    description?: string;
+    /**类型 四种可选 针对四种不同的场景 */
+    type?: AlertType;
+    /**关闭alert时触发的事件 */
+    onClose?: () => void;
+    /**是否显示关闭图标*/
+    closable?: boolean;
     showClose?: close,
-    type?: AlertType,
-    status?: boolean
-    title: string,
+    status?: boolean,
     children?: React.ReactNode,
 }
 
 type NativeDivProps = AlertBaseProps & React.BaseHTMLAttributes<HTMLElement>;
 
 export type AlertProps = AlertBaseProps & NativeDivProps;
-
+/** 
+ * 用于页面中展示重要的提示信息。 点击右侧的叉提示自动消失
+ * 
+ * ~~~js
+ * import { Alert } from 'lu-deisgn'
+ * ~~~
+*/
 const Alert: React.FC<AlertProps> = (props) => {
     const [closeAlert, setCloseAlert] = useState(true);
     const {

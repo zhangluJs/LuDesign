@@ -12,6 +12,7 @@ type SelectCallback = (selectedIndex: string) => void;
 
 export interface MenuProps {
     defaultIndex?: string;
+    /**菜单类型 横向或者纵向 */
     mode?: MenuMode;
     className?: string;
     style?: React.CSSProperties;
@@ -30,6 +31,13 @@ export const MenuContext = createContext<IMenuContext>({
     index: '0'
 });
 
+/**
+ * 为网站提供导航功能的菜单。支持横向纵向两种模式，支持下拉菜单。
+ * ~~~js
+ * import { Menu } from 'lu-deisgn'
+ * //然后可以使用 Menu.Item 和 Menu.Submenu 访问选项和子下拉菜单组件
+ * ~~~
+ */
 const Menu: React.FC<MenuProps> = (props) => {
     const {
         defaultIndex,

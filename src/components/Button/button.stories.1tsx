@@ -1,0 +1,74 @@
+import {storiesOf} from '@storybook/react';
+import {action} from '@storybook/addon-actions';
+import Button from './button';
+
+const defaultButton = () => {
+    return (
+        <Button onClick={action('clicked')}>
+            default button
+        </Button>
+    );
+}
+
+const buttonWithSize = () => {
+    return (
+        <>
+            <Button size='lg' onClick={action('clicked')}>
+                Large Button
+            </Button>
+            <Button size='sm' onClick={action('clicked')}>
+                Small Button
+            </Button>
+        </>
+    )
+}
+
+const buttonWithType = () => {
+    return (
+        <>
+            <Button btnType="primary" onClick={action('clicked')}>
+                Primary Button
+            </Button>
+            <Button btnType="danger" onClick={action('clicked')}>
+                Danger Button
+            </Button>
+            <Button btnType="link" href="https://www.baidu.com" onClick={action('clicked')}>
+                Link Button
+            </Button>
+        </>
+    )
+}
+
+storiesOf('Button Component', module)
+    // addParameters 可以定制化一些样式的参数
+    // .addParameters({
+    //     info: {
+    //         // 这个text支持markdown语法
+    //         text: `
+    //             this is a vey nice component
+    //             ## this is header
+    //             ~~~js
+    //                 const a = 'hello'
+    //             ~~~
+    //         `,
+    //         inline: true
+    //     }
+    // })
+    // .addParameters({
+    //     info: {
+    //         inline: false
+    //     }
+    // })
+    /**
+     * 也可以单独的给某一个添加配置
+     * 第三个参数就是parameters
+     * 这种写法的优先级最高，会覆盖上面那种写法
+     */
+    // .add('button', defaultButton, {
+    //     info : {
+    //         inline: false
+    //     }
+    // })
+    .add('Button', defaultButton)
+    .add('不同尺寸 Button', buttonWithSize)
+    .add('不同类型 Button', buttonWithType)
