@@ -43,7 +43,7 @@ export const clickMenu = () => (
   </Menu>
 )
 export const openedMenu = () => (
-  <Menu defaultIndex='0' onSelect={action('selected!')} mode="vertical" defaultOpenSubMenus={['2']}>
+  <Menu defaultIndex='0' onSelect={action('selected!')} mode="vertical" defaultSubMenus={['2']}>
     <Menu.Item>
       cool link
     </Menu.Item>

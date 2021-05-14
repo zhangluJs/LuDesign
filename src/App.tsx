@@ -14,6 +14,7 @@ import Tabs from './components/Tabs/Tabs';
 import TabItem from './components/Tabs/TabItem';
 import Icon from './components/Icon/icon';
 import Transition from './components/Transition/Transition';
+import Input from './components/Input/Input';
 
 library.add(fas);
 function App() {
@@ -154,6 +155,8 @@ function App() {
             </Button>
             </Transition>
         </div>
+        ------ 分割线 ------
+        <Input prepand="https://"></Input>
         {/* <a
           className="App-link"
           href="https://reactjs.org"
