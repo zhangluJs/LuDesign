@@ -31,12 +31,11 @@ const defaultProps = {
 describe('Alert Test', () => {
     // 测试默认熟悉
     it('Alert Default test', () => {
-        // 刚开始试图像btn单元测试那样拿节点，但是发现btn组件只有一层节点，而alert组件里面嵌套了其他节点。我在想这怎么判断这个组件是否挂载到了dom节点中时。看别人的代码才反应过来，我可以看里面的某个节点挂载没就好，没必要按部就班的找一整个节点，有点死板了。
-        const {container, queryByText} = render(<Alert {...defaultProps} {...DefaultProps}></Alert>);
-        const closeBtn = container.querySelector('.close') as HTMLElement;
-        expect(closeBtn).toBeInTheDocument();
-        fireEvent.click(closeBtn);
-        expect(defaultProps.onClick).toHaveBeenCalled();
+        // 刚开始试图像btn单元测试那样拿节点，但是发现btn组件只有一层节点，
+        // 而alert组件里面嵌套了其他节点。我在想这怎么判断这个组件是否挂载到了dom节点中时。
+        // 看别人的代码才反应过来，我可以看里面的某个节点挂载没就好，没必要按部就班的找一整个节点，有点死板了。
+        const {container, queryByText, getByText} = render(<Alert {...defaultProps} {...DefaultProps}></Alert>);
+        expect(queryByText('提示的文案')).toBeInTheDocument();
     })
     // 测试危险类型
     it('Alert Danger test', () => {
