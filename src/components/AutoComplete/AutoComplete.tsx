@@ -1,4 +1,5 @@
-import React, { ChangeEvent, ReactElement, useState, useEffect, useDebugValue} from 'react';
+import React, { ChangeEvent, ReactElement, useState, useEffect, KeyboardEvent} from 'react';
+import classNames from 'classnames';
 import Input, {InputProps} from '../Input/Input';
 import Icon from '../Icon/icon';
 import useDebounce from '../../hooks/useDebounce';
@@ -37,6 +38,8 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
 
     const [loading, setLoading] = useState(false);
 
+    const [highlightIndex, setHighlightIndex] = useState(-1);
+
     const deBounceValue = useDebounce(inputValue, 500);
 
     useEffect(() => {
@@ -55,11 +58,43 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
         } else {
             setSuggestions([]);
         }
+        setHighlightIndex(-1);
     }, [deBounceValue]);
+
+    const hightligh = (index: number) => {
+        if (index < 0) {
+            index = 0;
+        }
+        if (index >= suggestions.length) {
+            index = suggestions.length - 1;
+        }
+        setHighlightIndex(index);
+    }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.trim();
         setInputValue(value);
+    }
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        switch(e.keyCode) {
+            case 13:
+                if (suggestions[highlightIndex]) {
+                    handleSelect(suggestions[highlightIndex]);
+                }
+                break;
+            case 38:
+                hightligh(highlightIndex - 1)
+                break;
+            case 40:
+                hightligh(highlightIndex + 1)
+                break;
+            case 27:
+                setSuggestions([]);
+                break;
+            default:
+                break;
+        }
     }
 
     const handleSelect = (item: DataSourceType) => {
@@ -79,8 +114,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
             <ul>
                 {
                    suggestions.map((item, index) => {
+                       const cnames = classNames('suggestion-item', {
+                           'item-highlighted': index === highlightIndex
+                       })
                        return (
-                           <li key={index} onClick={() => {handleSelect(item)}}>
+                           <li key={index} className={cnames} onClick={() => {handleSelect(item)}}>
                                {renderTemplate(item)}
                            </li>
                        );
@@ -95,6 +133,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
             <Input
                 value={inputValue}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 {...restPorps}></Input>
             {loading && <ul><Icon icon="spinner" spin /></ul>}
             {(suggestions.length > 0) && generateDropdown()}
