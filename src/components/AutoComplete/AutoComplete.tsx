@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useState, useEffect, KeyboardEvent} from 'react';
+import React, { ChangeEvent, ReactElement, useState, useEffect, useRef, KeyboardEvent} from 'react';
 import classNames from 'classnames';
 import Input, {InputProps} from '../Input/Input';
 import Icon from '../Icon/icon';
@@ -38,12 +38,14 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
 
     const [loading, setLoading] = useState(false);
 
+    const tiggerSearch  = useRef(false);
+
     const [highlightIndex, setHighlightIndex] = useState(-1);
 
     const deBounceValue = useDebounce(inputValue, 500);
 
     useEffect(() => {
-        if (deBounceValue) {
+        if (deBounceValue &&  tiggerSearch.current) {
             setLoading(true);
             const result = fetchSuggestions(deBounceValue);
             if (result instanceof Promise) {
@@ -74,6 +76,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.trim();
         setInputValue(value);
+        tiggerSearch.current = true;
     }
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -103,6 +106,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
         if (onSelect) {
             onSelect(item);
         }
+        tiggerSearch.current = false;
     }
 
     const renderTemplate = (item: DataSourceType) => {

@@ -41,11 +41,12 @@ const simpleComplete = () => {
             return items.slice(0, 10).map(item => ({value: item.login, ...item}))
         });
     }
-    const handleRender = (item: DataSourceType<GithubUserProps>) => {
+    const handleRender = (item: DataSourceType) => {
+        let itemWithNumber = item as DataSourceType<GithubUserProps>;
         return (
             <div>
-                <h5>Name: {item.login}</h5>
-                <p>url: {item.url}</p>
+                <h5>Name: {itemWithNumber.login}</h5>
+                <p>url: {itemWithNumber.url}</p>
             </div>
         )
     }
