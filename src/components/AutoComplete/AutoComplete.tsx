@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Input, {InputProps} from '../Input/Input';
 import Icon from '../Icon/icon';
 import useDebounce from '../../hooks/useDebounce';
+import useClickOutSide from '../../hooks/useClickOutSide';
 
 /**
  * 因为有可能接收更复杂的数据类型，不能item只是一个string
@@ -42,7 +43,12 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
 
     const [highlightIndex, setHighlightIndex] = useState(-1);
 
+    // useRef就是绑定一个DOM节点。
+    const componentRef = useRef<HTMLDivElement>(null);
+
     const deBounceValue = useDebounce(inputValue, 500);
+
+    useClickOutSide(componentRef, () => {setSuggestions([])});
 
     useEffect(() => {
         if (deBounceValue &&  tiggerSearch.current) {
@@ -133,7 +139,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
     }
 
     return (
-        <div className="lu-auto-complete">
+        <div className="lu-auto-complete" ref={componentRef}>
             <Input
                 value={inputValue}
                 onChange={handleChange}
