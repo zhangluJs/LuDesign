@@ -125,7 +125,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
                 {
                    suggestions.map((item, index) => {
                        const cnames = classNames('suggestion-item', {
-                           'item-highlighted': index === highlightIndex
+                           'is-active': index === highlightIndex
                        })
                        return (
                            <li key={index} className={cnames} onClick={() => {handleSelect(item)}}>
